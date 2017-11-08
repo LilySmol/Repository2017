@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace Расписание
 {
-    public partial class Form1 : Form
+    public partial class AddAssociate : Form
     {
-        public Form1()
+        public AddAssociate()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Сотрудник сохранён;)");
+            this.Close();
         }
     }
 }
