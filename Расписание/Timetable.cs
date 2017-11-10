@@ -28,6 +28,10 @@ namespace Расписание
             ToolStripMenuItem about = new ToolStripMenuItem("О программе");
             about.Click += about_Click;
             menuStrip.Items.Add(about);
+
+            ToolStripMenuItem database = new ToolStripMenuItem("База данных");
+            database.Click += database_Click;
+            menuStrip.Items.Add(database);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,11 +45,17 @@ namespace Расписание
             associate.ShowDialog();
         }
 
-        void about_Click(object sender, EventArgs e)
+        void about_Click(object sender, EventArgs e) //о программе
         {
             Reference reference = new Reference();
             reference.Show();
         }
+
+        void database_Click(object sender, EventArgs e)
+        {
+            DataBase db_form = new DataBase();
+            db_form.ShowDialog();
+        }       
 
     }
 }
