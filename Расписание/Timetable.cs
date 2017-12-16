@@ -55,7 +55,18 @@ namespace Расписание
         {
             DataBase db_form = new DataBase();
             db_form.ShowDialog();
-        }       
+        }
 
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            WorkWithSchedule.makeSchedule(7, 8, DateTime.Now, "2/2");
+            List<TimingTable> listTiming = WorkWithSchedule.listTiming;
+        }
     }
 }

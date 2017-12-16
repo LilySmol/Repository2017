@@ -20,30 +20,6 @@ namespace Расписание
         {
             timeTableID = id;
             timeTableName = timeTable;
-        }
-
-        public int findTimeTableId(string timeTableN, List<TimeTableHelp> list) //найти id графика работы по наименованию
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].timeTableName == timeTableN)
-                {
-                    return list[i].timeTableID;
-                }
-            }
-            return -1;
-        }
-
-        public string findTimeTableName(int timeTableId, List<TimeTableHelp> list) //найти наименование по id
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].timeTableID == timeTableId)
-                {
-                    return list[i].timeTableName;
-                }
-            }
-            return "";
-        }
+        }        
     }
 }

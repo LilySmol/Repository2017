@@ -8,13 +8,13 @@ namespace Расписание
 {
     class Worker
     {
-        int workerID;
-        string FIO;
-        string phone;
-        int divisionID;
-        int postID;
-        int hoursID;
-        int timeTableID;
+        public int workerID;
+        public string FIO;
+        public string phone;
+        public int divisionID;
+        public int postID;
+        public int hoursID;
+        public int timeTableID;
 
         public Worker(int id, string fio, string phone, int division, int post, int hours, int timeTable)
         {

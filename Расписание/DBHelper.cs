@@ -10,9 +10,13 @@ namespace Расписание
     class DBHelper
     {
         static string dbname = File.ReadAllText(@"pathDB.txt");
-        string connection = @"Data Source = " + dbname + ";Version = 3";
+        static string connection = @"Data Source = " + dbname + ";Version = 3";
+        public static List<Hours> listHours = getListHours();
+        public static List<Post> listPost = getListPost();
+        public static List<Division> listDivision = getListDivision();
+        public static List<TimeTableHelp> listTimeTable = getListTimeTable();
 
-        public DataTable getWorkerData() //возвращает таблицу работников
+        public static DataTable getWorkerData() //возвращает таблицу работников
         {
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM worker", sqliteCon);
@@ -25,9 +29,27 @@ namespace Расписание
             return workerTable;
         }
 
-        public void addWorker(string fio, string phone, int division, int post, int hours, int timeTable)
+        public static List<Worker> getWorkerList() //возвращает список работников
         {
-            int maxId = this.findMaxWorkerID(this.getWorkerData()) + 1;
+            SQLiteConnection sqliteCon = new SQLiteConnection(connection);
+            SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM worker", sqliteCon);
+            sqliteCon.Open();
+            SQLiteDataReader sqliteReader = sqliteCom.ExecuteReader();
+            DataTable table = new DataTable();
+            table.Load(sqliteReader);
+            sqliteCon.Close();
+            sqliteCon.Dispose();
+            List<Worker> listWorkers = new List<Worker>();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                listWorkers.Add(new Worker(Convert.ToInt32(table.Rows[i][0]), table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), Convert.ToInt32(table.Rows[i][3]), Convert.ToInt32(table.Rows[i][4]), Convert.ToInt32(table.Rows[i][5]), Convert.ToInt32(table.Rows[i][6])));
+            }
+            return listWorkers;
+        }
+
+        public static void addWorker(string fio, string phone, int division, int post, int hours, int timeTable)
+        {
+            int maxId = findMaxWorkerID(getWorkerData()) + 1;
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             SQLiteCommand sqliteCom = new SQLiteCommand("INSERT INTO worker (workerID, FIO, phone, divisionID, postID, hoursID, timeTableID) VALUES ('"+maxId+"', '"+fio+"', '"+phone+"', '"+division+"', '"+post+"', '"+hours+"', '"+timeTable+"')", sqliteCon);
             sqliteCon.Open();
@@ -36,7 +58,19 @@ namespace Расписание
             sqliteCon.Dispose();
         }
 
-        public void deleteWorker(int id)
+        public static void editWorker(string fio, string phone, int division, int post, int hours, int timeTable, int id)
+        {
+            SQLiteConnection sqliteCon = new SQLiteConnection(connection);
+            string comand = "UPDATE worker SET FIO='" + fio + "', phone='" + phone + "', divisionID=" + division + ", postID=" + post + ", hoursID=" + hours+", timeTableID=" + timeTable + " WHERE workerID=" + id;
+            //string comand = "UPDATE worker SET FIO='" + fio + "' WHERE workerID=" + id;
+            SQLiteCommand sqliteCom = new SQLiteCommand(comand, sqliteCon);
+            sqliteCon.Open();
+            sqliteCom.ExecuteNonQuery();
+            sqliteCon.Close();
+            sqliteCon.Dispose();
+        }
+
+        public static void deleteWorker(int id)
         {
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             SQLiteCommand sqliteCom = new SQLiteCommand("DELETE FROM worker WHERE workerID = '" + id + "'", sqliteCon);
@@ -46,7 +80,7 @@ namespace Расписание
             sqliteCon.Dispose();
         }
 
-        public int findMaxWorkerID(DataTable workersTable)
+        public static int findMaxWorkerID(DataTable workersTable)
         {
             int max = 0;
             for (int i = 0; i < workersTable.Rows.Count; i++)
@@ -59,7 +93,7 @@ namespace Расписание
             return max;
         }
 
-        public List<Division> getListDivision() //список подразделений
+        public static List<Division> getListDivision() //список подразделений
         {
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM division", sqliteCon);
@@ -77,7 +111,7 @@ namespace Расписание
             return listDivision;
         }
 
-        public List<Post> getListPost() //список должностей
+        public static List<Post> getListPost() //список должностей
         {
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM post", sqliteCon);
@@ -95,7 +129,7 @@ namespace Расписание
             return listPost;
         }
 
-        public List<Hours> getListHours() //список часов
+        public static List<Hours> getListHours() //список часов
         {
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM hours", sqliteCon);
@@ -113,7 +147,7 @@ namespace Расписание
             return listHours;
         }
 
-        public List<TimeTableHelp> getListTimeTable() //список грфика работы
+        public static List<TimeTableHelp> getListTimeTable() //список грфика работы
         {
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM timeTable", sqliteCon);
@@ -129,6 +163,121 @@ namespace Расписание
                 listTimeTable.Add(new TimeTableHelp(Convert.ToInt32(table.Rows[i][0]), table.Rows[i][1].ToString()));
             }
             return listTimeTable;
+        }
+        
+        public static List<TimingTable> getListTimingTable() //список с расписанием
+        {
+            SQLiteConnection sqliteCon = new SQLiteConnection(connection);
+            SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM timing", sqliteCon);
+            sqliteCon.Open();
+            SQLiteDataReader sqliteReader = sqliteCom.ExecuteReader();
+            DataTable table = new DataTable();
+            table.Load(sqliteReader);
+            sqliteCon.Close();
+            sqliteCon.Dispose();
+            List<TimingTable> listTiming = new List<TimingTable>();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                listTiming.Add(new TimingTable(Convert.ToInt32(table.Rows[i][0]), Convert.ToInt32(table.Rows[i][1]), Convert.ToDateTime(table.Rows[i][2]), table.Rows[i][3].ToString()));
+            }
+            return listTiming;
+        }
+
+        public static int findHoursId(int hoursN) //найти id часов по наименованию
+        {            
+            for (int i = 0; i < listHours.Count; i++)
+            {
+                if (listHours[i].hoursName == hoursN)
+                {
+                    return listHours[i].hoursID;
+                }
+            }
+            return -1;
+        }
+
+        public static int findHoursName(int hoursId) //найти наименование часов по id
+        {
+            for (int i = 0; i < listHours.Count; i++)
+            {
+                if (listHours[i].hoursID == hoursId)
+                {
+                    return listHours[i].hoursName;
+                }
+            }
+            return -1;
+        }
+
+        public static int findPostId(string postN) //найти id должности по наименованию
+        {
+            
+            for (int i = 0; i < listPost.Count; i++)
+            {
+                if (listPost[i].postName == postN)
+                {
+                    return listPost[i].postID;
+                }
+            }
+            return -1;
+        }
+
+        public static string findPostName(int postId) //найти наименование должности по id
+        {
+            for (int i = 0; i < listPost.Count; i++)
+            {
+                if (listPost[i].postID == postId)
+                {
+                    return listPost[i].postName;
+                }
+            }
+            return "";
+        }
+
+        public static int findDivisionId(int divisionN) //найти id подразделения по наименованию
+        {
+            for (int i = 0; i < listDivision.Count; i++)
+            {
+                if (listDivision[i].divisionName == divisionN)
+                {
+                    return listDivision[i].divisionID;
+                }
+            }
+            return -1;
+        }
+
+        public static int findDivisionName(int divisionId) //найти наименование по id
+        {
+            for (int i = 0; i < listDivision.Count; i++)
+            {
+                if (listDivision[i].divisionID == divisionId)
+                {
+                    return listDivision[i].divisionName;
+                }
+            }
+            return -1;
+        }
+
+        public static int findTimeTableId(string timeTableN) //найти id графика работы по наименованию
+        {
+            for (int i = 0; i < listTimeTable.Count; i++)
+            {
+                if (listTimeTable[i].timeTableName == timeTableN)
+                {
+                    return listTimeTable[i].timeTableID;
+                }
+            }
+            return -1;
+        }
+
+        public static string findTimeTableName(int timeTableId) //найти наименование по id
+        {
+            for (int i = 0; i < listTimeTable.Count; i++)
+            {
+                if (listTimeTable[i].timeTableID == timeTableId)
+                {
+                    return listTimeTable[i].timeTableName;
+                }
+            }
+            return "";
         }
     }
 }

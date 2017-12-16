@@ -53,6 +53,7 @@ namespace Расписание
         {
             File.WriteAllText(@"pathDB.txt", textBox1.Text);
             MessageBox.Show("База данных подключена");
+            this.Close();
         }
     }
 }

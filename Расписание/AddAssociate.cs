@@ -12,58 +12,88 @@ namespace Расписание
 {
     public partial class AddAssociate : Form
     {
-        DBHelper db = new DBHelper();
-        Division division = new Division();
-        Post post = new Post();
-        Hours hours = new Hours();
-        TimeTableHelp timeTable = new TimeTableHelp();
-        List<Division> listDivision = new List<Division>();
-        List<Post> listPost = new List<Post>();
-        List<Hours> listHours = new List<Hours>();
-        List<TimeTableHelp> listTimeTable = new List<TimeTableHelp>();
+        int idWorker;
 
         public AddAssociate()
         {
             InitializeComponent();
+            //loadData();
+        }
+
+        public AddAssociate(string fio, string phone, int divisionName, string postName, int hoursName, string timeTableName, string formName, string textButton, int id)
+        {
+            InitializeComponent();
+            //loadData();
+            string[] fioSplit = fio.Split(' ');
+            this.Text = formName;
+            f.Text = fioSplit[0];
+            i.Text = fioSplit[1];
+            o.Text = fioSplit[2];
+            phoneBox.Text = phone;
+            divisionComboBox.Text = divisionName.ToString();
+            postComboBox2.Text = postName;
+            hoursComboBox3.Text = hoursName.ToString();
+            timeTableComboBox4.Text = timeTableName;
+            button1.Text = textButton;
+            idWorker = id;
+        }
+
+        private void loadData()
+        {
+            foreach (Division division in DBHelper.listDivision)
+            {
+                divisionComboBox.Items.Add(division.divisionName);
+            }
+            foreach (Post post in DBHelper.listPost)
+            {
+                postComboBox2.Items.Add(post.postName);
+            }
+            foreach (Hours hours in DBHelper.listHours)
+            {
+                hoursComboBox3.Items.Add(hours.hoursName);
+            }
+            foreach (TimeTableHelp timeTable in DBHelper.listTimeTable)
+            {
+                timeTableComboBox4.Items.Add(timeTable.timeTableName);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e) //cохранить
         {
-            if (validation())
+            if (button1.Text == "Сохранить")
             {
-                string fio = f.Text + " " + i.Text + " " + o.Text;
-                db.addWorker(fio, phoneBox.Text, division.findDivisionId(Convert.ToInt32(divisionComboBox.Text), listDivision), post.findPostId(postComboBox2.Text, listPost), hours.findHoursId(Convert.ToInt32(hoursComboBox3.Text), listHours), timeTable.findTimeTableId(timeTableComboBox4.Text, listTimeTable));
-                MessageBox.Show("Сотрудник сохранён;)");
-                this.Close();
+                if (validation())
+                {
+                    string fio = f.Text + " " + i.Text + " " + o.Text;
+                    DBHelper.addWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)), DBHelper.findTimeTableId(timeTableComboBox4.Text));
+                    MessageBox.Show("Сотрудник сохранён;)");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Заполните все обязательные поля");
+                }
             }
             else
             {
-                MessageBox.Show("Заполните все обязательные поля");
+                if (validation())
+                {
+                    string fio = f.Text + " " + i.Text + " " + o.Text;
+                    DBHelper.editWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)), DBHelper.findTimeTableId(timeTableComboBox4.Text), idWorker);
+                    MessageBox.Show("Сотрудник отредактирован;)");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Заполните все обязательные поля");
+                }
             }
         }
 
         private void AddAssociate_Load(object sender, EventArgs e)
         {
-            listDivision = db.getListDivision();
-            listPost = db.getListPost();
-            listTimeTable = db.getListTimeTable();
-            listHours = db.getListHours();
-            for (int i = 0; i < listDivision.Count; i++)
-            {
-                divisionComboBox.Items.Add(listDivision[i].divisionName);                
-            }
-            for (int i = 0; i < listPost.Count; i++)
-            {
-                postComboBox2.Items.Add(listPost[i].postName);
-            }
-            for (int i = 0; i < listHours.Count; i++)
-            {
-                hoursComboBox3.Items.Add(listHours[i].hoursName);
-            }
-            for (int i = 0; i < listTimeTable.Count; i++)
-            {
-                timeTableComboBox4.Items.Add(listTimeTable[i].timeTableName);
-            }
+            loadData();
+            
         }
 
         public bool validation()

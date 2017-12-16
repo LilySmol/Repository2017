@@ -139,7 +139,6 @@
             // 
             // divisionComboBox
             // 
-            this.divisionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.divisionComboBox.FormattingEnabled = true;
             this.divisionComboBox.Location = new System.Drawing.Point(191, 158);
             this.divisionComboBox.Name = "divisionComboBox";
@@ -148,7 +147,6 @@
             // 
             // postComboBox2
             // 
-            this.postComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.postComboBox2.FormattingEnabled = true;
             this.postComboBox2.Location = new System.Drawing.Point(191, 185);
             this.postComboBox2.Name = "postComboBox2";
@@ -159,9 +157,9 @@
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.button1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(59, 335);
+            this.button1.Location = new System.Drawing.Point(59, 313);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 29);
+            this.button1.Size = new System.Drawing.Size(291, 29);
             this.button1.TabIndex = 16;
             this.button1.Text = "Сохранить";
             this.button1.UseVisualStyleBackColor = false;
@@ -244,7 +242,6 @@
             // 
             // hoursComboBox3
             // 
-            this.hoursComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.hoursComboBox3.FormattingEnabled = true;
             this.hoursComboBox3.Location = new System.Drawing.Point(191, 215);
             this.hoursComboBox3.Name = "hoursComboBox3";
@@ -253,7 +250,6 @@
             // 
             // timeTableComboBox4
             // 
-            this.timeTableComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.timeTableComboBox4.FormattingEnabled = true;
             this.timeTableComboBox4.Location = new System.Drawing.Point(191, 242);
             this.timeTableComboBox4.Name = "timeTableComboBox4";
