@@ -8,10 +8,10 @@ namespace Расписание
 {
     class TimingTable
     {
-        int timingID;
-        int workerID;
-        DateTime data;
-        string hours;
+        public int timingID;
+        public int workerID;
+        public DateTime data;
+        public string hours;
 
         public TimingTable()
         { }

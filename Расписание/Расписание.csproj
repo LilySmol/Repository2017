@@ -97,6 +97,7 @@
     <Compile Include="Reference.Designer.cs">
       <DependentUpon>Reference.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="Timetable.cs">
       <SubType>Form</SubType>
     </Compile>

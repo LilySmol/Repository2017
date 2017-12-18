@@ -29,22 +29,19 @@
         private void InitializeComponent()
         {
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.week = new System.Windows.Forms.RadioButton();
+            this.month = new System.Windows.Forms.RadioButton();
             this.button1 = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridTimeTable = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimeStart = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxTimeTable = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.comboBoxTimeWork = new System.Windows.Forms.ComboBox();
+            this.button3 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTimeTable)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -55,83 +52,50 @@
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip1";
             // 
-            // radioButton1
+            // week
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(759, 40);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(63, 17);
-            this.radioButton1.TabIndex = 1;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Неделя";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.week.AutoSize = true;
+            this.week.Location = new System.Drawing.Point(759, 40);
+            this.week.Name = "week";
+            this.week.Size = new System.Drawing.Size(63, 17);
+            this.week.TabIndex = 1;
+            this.week.TabStop = true;
+            this.week.Text = "Неделя";
+            this.week.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // month
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(759, 63);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(58, 17);
-            this.radioButton2.TabIndex = 2;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Месяц";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.month.AutoSize = true;
+            this.month.Location = new System.Drawing.Point(759, 63);
+            this.month.Name = "month";
+            this.month.Size = new System.Drawing.Size(58, 17);
+            this.month.TabIndex = 2;
+            this.month.TabStop = true;
+            this.month.Text = "Месяц";
+            this.month.UseVisualStyleBackColor = true;
+            this.month.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.button1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(33, 495);
+            this.button1.Location = new System.Drawing.Point(760, 452);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 28);
             this.button1.TabIndex = 4;
             this.button1.Text = "Печать";
             this.button1.UseVisualStyleBackColor = false;
             // 
-            // dateTimePicker1
+            // dataGridTimeTable
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(159, 499);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(150, 20);
-            this.dateTimePicker1.TabIndex = 5;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(357, 499);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(146, 20);
-            this.dateTimePicker2.TabIndex = 6;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(133, 503);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(13, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "c";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(329, 503);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "по";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 40);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(735, 440);
-            this.dataGridView1.TabIndex = 9;
+            this.dataGridTimeTable.AllowUserToAddRows = false;
+            this.dataGridTimeTable.AllowUserToDeleteRows = false;
+            this.dataGridTimeTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridTimeTable.Location = new System.Drawing.Point(12, 40);
+            this.dataGridTimeTable.Name = "dataGridTimeTable";
+            this.dataGridTimeTable.ReadOnly = true;
+            this.dataGridTimeTable.Size = new System.Drawing.Size(735, 440);
+            this.dataGridTimeTable.TabIndex = 9;
             // 
             // label3
             // 
@@ -142,12 +106,13 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "Составить графиг начиная с";
             // 
-            // dateTimePicker3
+            // dateTimeStart
             // 
-            this.dateTimePicker3.Location = new System.Drawing.Point(918, 92);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(132, 20);
-            this.dateTimePicker3.TabIndex = 11;
+            this.dateTimeStart.Location = new System.Drawing.Point(918, 92);
+            this.dateTimeStart.Name = "dateTimeStart";
+            this.dateTimeStart.Size = new System.Drawing.Size(132, 20);
+            this.dateTimeStart.TabIndex = 11;
+            this.dateTimeStart.Value = new System.DateTime(2017, 12, 18, 0, 0, 0, 0);
             // 
             // label4
             // 
@@ -158,13 +123,13 @@
             this.label4.TabIndex = 12;
             this.label4.Text = "График";
             // 
-            // comboBox1
+            // comboBoxTimeTable
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(918, 121);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(132, 21);
-            this.comboBox1.TabIndex = 13;
+            this.comboBoxTimeTable.FormattingEnabled = true;
+            this.comboBoxTimeTable.Location = new System.Drawing.Point(918, 121);
+            this.comboBoxTimeTable.Name = "comboBoxTimeTable";
+            this.comboBoxTimeTable.Size = new System.Drawing.Size(132, 21);
+            this.comboBoxTimeTable.TabIndex = 13;
             // 
             // button2
             // 
@@ -185,34 +150,41 @@
             this.label5.TabIndex = 15;
             this.label5.Text = "Режим работы заведения";
             // 
-            // comboBox2
+            // comboBoxTimeWork
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(918, 154);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(132, 21);
-            this.comboBox2.TabIndex = 16;
+            this.comboBoxTimeWork.FormattingEnabled = true;
+            this.comboBoxTimeWork.Location = new System.Drawing.Point(918, 154);
+            this.comboBoxTimeWork.Name = "comboBoxTimeWork";
+            this.comboBoxTimeWork.Size = new System.Drawing.Size(132, 21);
+            this.comboBoxTimeWork.TabIndex = 16;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(760, 220);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(131, 23);
+            this.button3.TabIndex = 17;
+            this.button3.Text = "Сохранить расписание ";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Timetable
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1064, 556);
-            this.Controls.Add(this.comboBox2);
+            this.ClientSize = new System.Drawing.Size(1064, 493);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.comboBoxTimeWork);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBoxTimeTable);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dateTimePicker3);
+            this.Controls.Add(this.dateTimeStart);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dataGridTimeTable);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.Controls.Add(this.month);
+            this.Controls.Add(this.week);
             this.Controls.Add(this.menuStrip);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -221,7 +193,7 @@
             this.Name = "Timetable";
             this.Text = "График работы";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridTimeTable)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,21 +203,18 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton week;
+        private System.Windows.Forms.RadioButton month;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridTimeTable;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        private System.Windows.Forms.DateTimePicker dateTimeStart;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxTimeTable;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBoxTimeWork;
+        private System.Windows.Forms.Button button3;
     }
 }
 

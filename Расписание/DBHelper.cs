@@ -15,6 +15,10 @@ namespace Расписание
         public static List<Post> listPost = getListPost();
         public static List<Division> listDivision = getListDivision();
         public static List<TimeTableHelp> listTimeTable = getListTimeTable();
+        public static List<Worker> listWorker = getWorkerList();
+        public static List<string> listTimeWork = getListTimeWork();
+        public static Settings settings = getSettings();
+        public static List<TimingTable> listTimingTable = getListTimingTable();
 
         public static DataTable getWorkerData() //возвращает таблицу работников
         {
@@ -183,6 +187,39 @@ namespace Расписание
             return listTiming;
         }
 
+        public static void saveTimeWork(List<TimingTable> list) //сохранить график работы персонала
+        {
+            SQLiteConnection sqliteCon = new SQLiteConnection(connection);
+            sqliteCon.Open();
+            SQLiteCommand sqliteCom = new SQLiteCommand("DELETE FROM timing", sqliteCon);
+            sqliteCom.ExecuteNonQuery();
+            foreach (TimingTable table in list)
+            {
+                sqliteCom = new SQLiteCommand("INSERT INTO timing (timingID, workerID, data, hours) VALUES (" + table.timingID + ", " + table.workerID + ", '" + table.data + "', '" + table.hours + "')", sqliteCon);
+                sqliteCom.ExecuteNonQuery();
+            }
+            sqliteCon.Close();
+            sqliteCon.Dispose();
+        }
+
+        public static List<string> getListTimeWork() //список с режимом работы
+        {
+            SQLiteConnection sqliteCon = new SQLiteConnection(connection);
+            SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM timeWork", sqliteCon);
+            sqliteCon.Open();
+            SQLiteDataReader sqliteReader = sqliteCom.ExecuteReader();
+            DataTable table = new DataTable();
+            table.Load(sqliteReader);
+            sqliteCon.Close();
+            sqliteCon.Dispose();
+            List<string> listTimeWork = new List<string>();
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                listTimeWork.Add(table.Rows[i][1].ToString());
+            }
+            return listTimeWork;
+        }
+
         public static int findHoursId(int hoursN) //найти id часов по наименованию
         {            
             for (int i = 0; i < listHours.Count; i++)
@@ -278,6 +315,64 @@ namespace Расписание
                 }
             }
             return "";
+        }
+
+        public static int findWorkerId(string workerN) //найти id работника по наименованию
+        {
+            for (int i = 0; i < listWorker.Count; i++)
+            {
+                if (listWorker[i].FIO == workerN)
+                {
+                    return listWorker[i].workerID;
+                }
+            }
+            return -1;
+        }
+
+        public static string findWorkerName(int workerId) //найти fio по id
+        {
+            for (int i = 0; i < listWorker.Count; i++)
+            {
+                if (listWorker[i].workerID == workerId)
+                {
+                    return listWorker[i].FIO;
+                }
+            }
+            return "";
+        }
+
+        public static void saveSettings(int count, DateTime day, string time, string hours)
+        {
+            SQLiteConnection sqliteCon = new SQLiteConnection(connection);
+            sqliteCon.Open();
+            SQLiteCommand sqliteCom = new SQLiteCommand("DELETE FROM settings", sqliteCon);
+            sqliteCom.ExecuteNonQuery();
+            sqliteCom = new SQLiteCommand("INSERT INTO settings (countDays, dayStart, timeTable, timeWork) VALUES (" + count + ",'" + day + "','" + hours + "','" + time + "')", sqliteCon);           
+            sqliteCom.ExecuteNonQuery();
+            sqliteCon.Close();
+            sqliteCon.Dispose();
+        }
+
+        public static Settings getSettings()
+        {
+            try
+            {
+                SQLiteConnection sqliteCon = new SQLiteConnection(connection);
+                SQLiteCommand sqliteCom = new SQLiteCommand("SELECT * FROM settings", sqliteCon);
+                sqliteCon.Open();
+                SQLiteDataReader sqliteReader = sqliteCom.ExecuteReader();
+                DataTable table = new DataTable();
+                table.Load(sqliteReader);
+                sqliteCon.Close();
+                sqliteCon.Dispose();
+                Settings settings = new Settings(Convert.ToInt32(table.Rows[0][0]), Convert.ToDateTime(table.Rows[0][1]), table.Rows[0][3].ToString(), table.Rows[0][2].ToString());
+                return settings;
+            }
+            catch
+            {
+
+            }
+            return settings;                
         }
     }
 }
