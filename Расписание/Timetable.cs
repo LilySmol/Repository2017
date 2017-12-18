@@ -133,6 +133,7 @@ namespace Расписание
         private void updateDataTable()
         {
             dataGridTimeTable.Rows.Clear();
+            dataGridTimeTable.Columns.Clear();
             DateTime dayStart = dateTimeStart.Value;
             int timeStart = Convert.ToInt32(comboBoxTimeWork.Text.Split('-')[0]);
             int days = (week.Checked) ? 7 : 30;
@@ -180,6 +181,18 @@ namespace Расписание
                 return false;
             }
             return true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataGridTimeTable.Rows.Clear();
+            dataGridTimeTable.Columns.Clear();
+            DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
+            comboBoxColumn.Items.AddRange("1", "2");
+            comboBoxColumn.ValueType = typeof(Color);
+            comboBoxColumn.ReadOnly = false;
+            //comboBoxColumn.
+            dataGridTimeTable.Columns.Add(comboBoxColumn);
         }
     }
 }
