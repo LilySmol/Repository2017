@@ -40,7 +40,7 @@ namespace Расписание
                 comboBoxTimeWork.Items.Add(timeWork);
             }
 
-            if (DBHelper.getSettings() != null)
+            if (DBHelper.settings != null)
             {
                 dateTimeStart.Text = DBHelper.settings.dayStart.ToString();
                 comboBoxTimeTable.Text = DBHelper.settings.timeTable;
@@ -109,7 +109,13 @@ namespace Расписание
             dataGridTimeTable.Columns.Add("fio", "ФИО");
             for (int i = 0; i < days; i++)
             {
-                dataGridTimeTable.Columns.Add(dayStart.Date.ToString("d"), dayStart.Date.ToString("d"));
+                DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
+                foreach (string s in DBHelper.listCombobox)
+                {
+                    comboBoxColumn.Items.AddRange(s);
+                }
+                comboBoxColumn.Name = dayStart.Date.ToString("d");
+                dataGridTimeTable.Columns.Add(comboBoxColumn);
                 dayStart += oneDay;
             }
             foreach (Worker worker in DBHelper.listWorker)
@@ -142,7 +148,13 @@ namespace Расписание
             dataGridTimeTable.Columns.Add("fio", "ФИО");
             for (int i = 0; i < days; i++)
             {
-                dataGridTimeTable.Columns.Add(dayStart.Date.ToString("d"), dayStart.Date.ToString("d"));
+                DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
+                foreach (string s in DBHelper.listCombobox)
+                {
+                    comboBoxColumn.Items.AddRange(s);
+                }
+                comboBoxColumn.Name = dayStart.Date.ToString("d");
+                dataGridTimeTable.Columns.Add(comboBoxColumn);
                 dayStart += oneDay;
             }
             foreach (Worker worker in DBHelper.listWorker)
@@ -168,6 +180,7 @@ namespace Расписание
             DateTime dayStart = dateTimeStart.Value;
             string timeStart = comboBoxTimeWork.Text;
             int days = (week.Checked) ? 7 : 30;
+            updateList();            
             DBHelper.saveTimeWork(listTiming);
             DBHelper.saveSettings(days, dayStart, timeStart, comboBoxTimeTable.Text);
             MessageBox.Show("сохранено");
@@ -188,11 +201,36 @@ namespace Расписание
             dataGridTimeTable.Rows.Clear();
             dataGridTimeTable.Columns.Clear();
             DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
-            comboBoxColumn.Items.AddRange("1", "2");
-            comboBoxColumn.ValueType = typeof(Color);
-            comboBoxColumn.ReadOnly = false;
-            //comboBoxColumn.
+            comboBoxColumn.Items.AddRange("1");
+            comboBoxColumn.Items.AddRange("2");
+            comboBoxColumn.Items.AddRange("3");
             dataGridTimeTable.Columns.Add(comboBoxColumn);
+            dataGridTimeTable[0, 0].Value = "1";
         }
+        
+        private void updateList()
+        {
+            for (int i = 0; i < dataGridTimeTable.RowCount; i++)
+            {
+                for (int j = 1; j < dataGridTimeTable.ColumnCount; j++)
+                {
+                    foreach (TimingTable t in listTiming)
+                    {
+                        try
+                        {
+                            string name = DBHelper.findWorkerName(t.workerID);
+                            string nameD = dataGridTimeTable[0, i].Value.ToString();
+                            string data = t.data.Date.ToString("d");
+                            string dataD = dataGridTimeTable.Columns[j].HeaderText;
+                            if (name == nameD & data == dataD)
+                            {
+                                t.hours = dataGridTimeTable[j, i].Value.ToString();
+                            }
+                        }
+                        catch { }
+                    }
+                }
+            }
+        }        
     }
 }

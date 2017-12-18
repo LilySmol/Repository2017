@@ -19,6 +19,21 @@ namespace Расписание
         public static List<string> listTimeWork = getListTimeWork();
         public static Settings settings = getSettings();
         public static List<TimingTable> listTimingTable = getListTimingTable();
+        public static List<string> listCombobox = getList();
+
+        public static List<string> getList()
+        {
+            List<string> list = new List<string>();
+            list.Add("0");
+            foreach (string time in listTimeWork)
+            {
+                foreach (Hours hours in listHours)
+                {
+                    list.Add(time.Split('-')[0] + "-" + (Convert.ToInt32(time.Split('-')[0]) + hours.hoursName));
+                }
+            }
+            return list;
+        }
 
         public static DataTable getWorkerData() //возвращает таблицу работников
         {
@@ -365,7 +380,7 @@ namespace Расписание
                 table.Load(sqliteReader);
                 sqliteCon.Close();
                 sqliteCon.Dispose();
-                Settings settings = new Settings(Convert.ToInt32(table.Rows[0][0]), Convert.ToDateTime(table.Rows[0][1]), table.Rows[0][3].ToString(), table.Rows[0][2].ToString());
+                Settings settings = new Settings(Convert.ToInt32(table.Rows[0][0]), Convert.ToDateTime(table.Rows[0][1]), table.Rows[0][2].ToString(), table.Rows[0][3].ToString());
                 return settings;
             }
             catch
