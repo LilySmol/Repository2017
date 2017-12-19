@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,7 +13,7 @@ namespace Расписание
 {
     public partial class Timetable : Form
     {
-        List<TimingTable> listTiming = new List<TimingTable>();      
+        List<TimingTable> listTiming = DBHelper.listTimingTable;      
 
         public Timetable()
         {
@@ -180,7 +181,7 @@ namespace Расписание
             DateTime dayStart = dateTimeStart.Value;
             string timeStart = comboBoxTimeWork.Text;
             int days = (week.Checked) ? 7 : 30;
-            updateList();            
+            updateList();           
             DBHelper.saveTimeWork(listTiming);
             DBHelper.saveSettings(days, dayStart, timeStart, comboBoxTimeTable.Text);
             MessageBox.Show("сохранено");

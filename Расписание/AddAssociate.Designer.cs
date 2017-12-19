@@ -49,10 +49,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.hoursComboBox3 = new System.Windows.Forms.ComboBox();
-            this.timeTableComboBox4 = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -157,7 +155,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.button1.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(59, 313);
+            this.button1.Location = new System.Drawing.Point(59, 281);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(291, 29);
             this.button1.TabIndex = 16;
@@ -248,22 +246,12 @@
             this.hoursComboBox3.Size = new System.Drawing.Size(159, 21);
             this.hoursComboBox3.TabIndex = 25;
             // 
-            // timeTableComboBox4
-            // 
-            this.timeTableComboBox4.FormattingEnabled = true;
-            this.timeTableComboBox4.Location = new System.Drawing.Point(191, 242);
-            this.timeTableComboBox4.Name = "timeTableComboBox4";
-            this.timeTableComboBox4.Size = new System.Drawing.Size(159, 21);
-            this.timeTableComboBox4.TabIndex = 26;
-            // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(56, 245);
+            this.label17.Location = new System.Drawing.Point(0, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(85, 13);
-            this.label17.TabIndex = 27;
-            this.label17.Text = "График работы";
+            this.label17.Size = new System.Drawing.Size(100, 23);
+            this.label17.TabIndex = 29;
             // 
             // label18
             // 
@@ -276,27 +264,14 @@
             this.label18.TabIndex = 28;
             this.label18.Text = "*";
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label19.Location = new System.Drawing.Point(359, 241);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(14, 18);
-            this.label19.TabIndex = 29;
-            this.label19.Text = "*";
-            // 
             // AddAssociate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(619, 376);
-            this.Controls.Add(this.label19);
+            this.ClientSize = new System.Drawing.Size(497, 355);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.timeTableComboBox4);
             this.Controls.Add(this.hoursComboBox3);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label14);
@@ -350,9 +325,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox hoursComboBox3;
-        private System.Windows.Forms.ComboBox timeTableComboBox4;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
     }
 }

@@ -14,9 +14,8 @@ namespace Расписание
         public int divisionID;
         public int postID;
         public int hoursID;
-        public int timeTableID;
 
-        public Worker(int id, string fio, string phone, int division, int post, int hours, int timeTable)
+        public Worker(int id, string fio, string phone, int division, int post, int hours)
         {
             workerID = id;
             FIO = fio;
@@ -24,7 +23,6 @@ namespace Расписание
             divisionID = division;
             postID = post;
             hoursID = hours;
-            timeTableID = timeTable;
         }
     }
 }

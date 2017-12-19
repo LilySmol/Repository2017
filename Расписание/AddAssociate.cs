@@ -20,7 +20,7 @@ namespace Расписание
             //loadData();
         }
 
-        public AddAssociate(string fio, string phone, int divisionName, string postName, int hoursName, string timeTableName, string formName, string textButton, int id)
+        public AddAssociate(string fio, string phone, int divisionName, string postName, int hoursName, string formName, string textButton, int id)
         {
             InitializeComponent();
             //loadData();
@@ -33,7 +33,6 @@ namespace Расписание
             divisionComboBox.Text = divisionName.ToString();
             postComboBox2.Text = postName;
             hoursComboBox3.Text = hoursName.ToString();
-            timeTableComboBox4.Text = timeTableName;
             button1.Text = textButton;
             idWorker = id;
         }
@@ -52,10 +51,6 @@ namespace Расписание
             {
                 hoursComboBox3.Items.Add(hours.hoursName);
             }
-            foreach (TimeTableHelp timeTable in DBHelper.listTimeTable)
-            {
-                timeTableComboBox4.Items.Add(timeTable.timeTableName);
-            }
         }
 
         private void button1_Click(object sender, EventArgs e) //cохранить
@@ -65,7 +60,7 @@ namespace Расписание
                 if (validation())
                 {
                     string fio = f.Text + " " + i.Text + " " + o.Text;
-                    DBHelper.addWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)), DBHelper.findTimeTableId(timeTableComboBox4.Text));
+                    DBHelper.addWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)));
                     MessageBox.Show("Сотрудник сохранён;)");
                     this.Close();
                 }
@@ -79,7 +74,7 @@ namespace Расписание
                 if (validation())
                 {
                     string fio = f.Text + " " + i.Text + " " + o.Text;
-                    DBHelper.editWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)), DBHelper.findTimeTableId(timeTableComboBox4.Text), idWorker);
+                    DBHelper.editWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)), idWorker);
                     MessageBox.Show("Сотрудник отредактирован;)");
                     this.Close();
                 }
@@ -98,7 +93,7 @@ namespace Расписание
 
         public bool validation()
         {
-            if (f.Text != "" & i.Text != "" & o.Text != "" & divisionComboBox.Text != "" & hoursComboBox3.Text != "" & postComboBox2.Text != "" & timeTableComboBox4.Text != "")
+            if (f.Text != "" & i.Text != "" & o.Text != "" & divisionComboBox.Text != "" & hoursComboBox3.Text != "" & postComboBox2.Text != "")
             {
                 return true;
             }

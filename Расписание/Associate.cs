@@ -55,18 +55,17 @@ namespace Расписание
             WorkerListGrid.Columns.Add("division", "Подразделение");
             WorkerListGrid.Columns.Add("post", "Должность");
             WorkerListGrid.Columns.Add("hours", "Рабочие часы");
-            WorkerListGrid.Columns.Add("timeTable", "График работы");
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                WorkerListGrid.Rows.Add(dt.Rows[i][0], dt.Rows[i][1], dt.Rows[i][2], DBHelper.findDivisionName(Convert.ToInt32(dt.Rows[i][3])), DBHelper.findPostName(Convert.ToInt32(dt.Rows[i][4])), DBHelper.findHoursName(Convert.ToInt32(dt.Rows[i][5])), DBHelper.findTimeTableName(Convert.ToInt32(dt.Rows[i][6])));               
+                WorkerListGrid.Rows.Add(dt.Rows[i][0], dt.Rows[i][1], dt.Rows[i][2], DBHelper.findDivisionName(Convert.ToInt32(dt.Rows[i][3])), DBHelper.findPostName(Convert.ToInt32(dt.Rows[i][4])), DBHelper.findHoursName(Convert.ToInt32(dt.Rows[i][5])));               
             }
-            WorkerListGrid.Columns[1].Width = 250;
+            WorkerListGrid.Columns[1].Width = 350;
         }
 
         private void button3_Click(object sender, EventArgs e) //редактировать
         {
             int index = WorkerListGrid.SelectedCells[0].RowIndex;
-            AddAssociate editAssociate = new AddAssociate(WorkerListGrid.Rows[index].Cells[1].Value.ToString(), WorkerListGrid.Rows[index].Cells[2].Value.ToString(), Convert.ToInt32(WorkerListGrid.Rows[index].Cells[3].Value), WorkerListGrid.Rows[index].Cells[4].Value.ToString(), Convert.ToInt32(WorkerListGrid.Rows[index].Cells[5].Value), WorkerListGrid.Rows[index].Cells[6].Value.ToString(), "Редактировать сотрудника", "Сохранить изменения", Convert.ToInt32(WorkerListGrid.Rows[index].Cells[0].Value));
+            AddAssociate editAssociate = new AddAssociate(WorkerListGrid.Rows[index].Cells[1].Value.ToString(), WorkerListGrid.Rows[index].Cells[2].Value.ToString(), Convert.ToInt32(WorkerListGrid.Rows[index].Cells[3].Value), WorkerListGrid.Rows[index].Cells[4].Value.ToString(), Convert.ToInt32(WorkerListGrid.Rows[index].Cells[5].Value), "Редактировать сотрудника", "Сохранить изменения", Convert.ToInt32(WorkerListGrid.Rows[index].Cells[0].Value));
             editAssociate.ShowDialog();
             updateGrid();
         }

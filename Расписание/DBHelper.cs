@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
@@ -61,26 +62,26 @@ namespace Расписание
             List<Worker> listWorkers = new List<Worker>();
             for (int i = 0; i < table.Rows.Count; i++)
             {
-                listWorkers.Add(new Worker(Convert.ToInt32(table.Rows[i][0]), table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), Convert.ToInt32(table.Rows[i][3]), Convert.ToInt32(table.Rows[i][4]), Convert.ToInt32(table.Rows[i][5]), Convert.ToInt32(table.Rows[i][6])));
+                listWorkers.Add(new Worker(Convert.ToInt32(table.Rows[i][0]), table.Rows[i][1].ToString(), table.Rows[i][2].ToString(), Convert.ToInt32(table.Rows[i][3]), Convert.ToInt32(table.Rows[i][4]), Convert.ToInt32(table.Rows[i][5])));
             }
             return listWorkers;
         }
 
-        public static void addWorker(string fio, string phone, int division, int post, int hours, int timeTable)
+        public static void addWorker(string fio, string phone, int division, int post, int hours)
         {
             int maxId = findMaxWorkerID(getWorkerData()) + 1;
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
-            SQLiteCommand sqliteCom = new SQLiteCommand("INSERT INTO worker (workerID, FIO, phone, divisionID, postID, hoursID, timeTableID) VALUES ('"+maxId+"', '"+fio+"', '"+phone+"', '"+division+"', '"+post+"', '"+hours+"', '"+timeTable+"')", sqliteCon);
+            SQLiteCommand sqliteCom = new SQLiteCommand("INSERT INTO worker (workerID, FIO, phone, divisionID, postID, hoursID) VALUES ('"+maxId+"', '"+fio+"', '"+phone+"', '"+division+"', '"+post+"', '"+hours+"')", sqliteCon);
             sqliteCon.Open();
             sqliteCom.ExecuteNonQuery();
             sqliteCon.Close();
             sqliteCon.Dispose();
         }
 
-        public static void editWorker(string fio, string phone, int division, int post, int hours, int timeTable, int id)
+        public static void editWorker(string fio, string phone, int division, int post, int hours, int id)
         {
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
-            string comand = "UPDATE worker SET FIO='" + fio + "', phone='" + phone + "', divisionID=" + division + ", postID=" + post + ", hoursID=" + hours+", timeTableID=" + timeTable + " WHERE workerID=" + id;
+            string comand = "UPDATE worker SET FIO='" + fio + "', phone='" + phone + "', divisionID=" + division + ", postID=" + post + ", hoursID=" + hours + " WHERE workerID=" + id;
             //string comand = "UPDATE worker SET FIO='" + fio + "' WHERE workerID=" + id;
             SQLiteCommand sqliteCom = new SQLiteCommand(comand, sqliteCon);
             sqliteCon.Open();
@@ -202,17 +203,45 @@ namespace Расписание
             return listTiming;
         }
 
+        private static DataTable ConvertToDataTable(List<TimingTable> list)
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("timingID");
+            table.Columns.Add("workerID");
+            table.Columns.Add("data");
+            table.Columns.Add("hours");
+            foreach (TimingTable timing in list)
+            {
+                DataRow row = table.NewRow();
+                row["timingID"] = timing.timingID;
+                row["workerID"] = timing.workerID;
+                row["data"] = timing.data;
+                row["hours"] = timing.hours;
+                table.Rows.Add(row);
+            }
+            return table;
+        }
+
         public static void saveTimeWork(List<TimingTable> list) //сохранить график работы персонала
         {
+            SQLiteDataAdapter adapter;
+            DataTable t = ConvertToDataTable(list);
             SQLiteConnection sqliteCon = new SQLiteConnection(connection);
             sqliteCon.Open();
             SQLiteCommand sqliteCom = new SQLiteCommand("DELETE FROM timing", sqliteCon);
             sqliteCom.ExecuteNonQuery();
-            foreach (TimingTable table in list)
-            {
-                sqliteCom = new SQLiteCommand("INSERT INTO timing (timingID, workerID, data, hours) VALUES (" + table.timingID + ", " + table.workerID + ", '" + table.data + "', '" + table.hours + "')", sqliteCon);
-                sqliteCom.ExecuteNonQuery();
-            }
+            sqliteCom = sqliteCon.CreateCommand();
+            sqliteCom.CommandText = string.Format("SELECT * FROM timing");
+            adapter = new SQLiteDataAdapter(sqliteCom);
+            SQLiteCommandBuilder builder = new SQLiteCommandBuilder(adapter);
+            adapter.Update(t);
+            //SQLiteCommand sqliteCom = new SQLiteCommand("DELETE FROM timing", sqliteCon);
+            //sqliteCom.ExecuteNonQuery();
+            //foreach (TimingTable table in list)
+            //{
+            //    sqliteCom = new SQLiteCommand("INSERT INTO timing (timingID, workerID, data, hours) VALUES (" + table.timingID + ", " + table.workerID + ", '" + table.data + "', '" + table.hours + "')", sqliteCon);
+            //    sqliteCom.ExecuteNonQuery();
+            //}
             sqliteCon.Close();
             sqliteCon.Dispose();
         }
