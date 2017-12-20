@@ -14,21 +14,22 @@ namespace Расписание
     {
         int idWorker;
 
-        public AddAssociate()
+        public AddAssociate() //добавление 
         {
             InitializeComponent();
-            //loadData();
+            divisionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            hoursComboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
+            postComboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         public AddAssociate(string fio, string phone, int divisionName, string postName, int hoursName, string formName, string textButton, int id)
         {
             InitializeComponent();
-            //loadData();
             string[] fioSplit = fio.Split(' ');
             this.Text = formName;
             f.Text = fioSplit[0];
             i.Text = fioSplit[1];
-            o.Text = fioSplit[2];
+            o.Text = fioSplit[2];            
             phoneBox.Text = phone;
             divisionComboBox.Text = divisionName.ToString();
             postComboBox2.Text = postName;
@@ -57,12 +58,27 @@ namespace Расписание
         {
             if (button1.Text == "Сохранить")
             {
-                if (validation())
+                if (empty())
                 {
-                    string fio = f.Text + " " + i.Text + " " + o.Text;
-                    DBHelper.addWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)));
-                    MessageBox.Show("Сотрудник сохранён;)");
-                    this.Close();
+                    if (numberValid())
+                    {
+                        if (validation())
+                        {
+                            string fio = f.Text + " " + i.Text + " " + o.Text;
+                            DBHelper.addWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)));
+                            MessageBox.Show("Сотрудник сохранён;)");
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Введите корректные значения в поле Должность/Часы/Подразделение");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Введите корректные данные в поле телефона");
+                        phoneBox.Text = "";
+                    }
                 }
                 else
                 {
@@ -71,12 +87,27 @@ namespace Расписание
             }
             else
             {
-                if (validation())
+                if (empty())
                 {
-                    string fio = f.Text + " " + i.Text + " " + o.Text;
-                    DBHelper.editWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)), idWorker);
-                    MessageBox.Show("Сотрудник отредактирован;)");
-                    this.Close();
+                    if (numberValid())
+                    {
+                        if (validation())
+                        {
+                            string fio = f.Text + " " + i.Text + " " + o.Text;
+                            DBHelper.editWorker(fio, phoneBox.Text, DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)), DBHelper.findPostId(postComboBox2.Text), DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)), idWorker);
+                            MessageBox.Show("Сотрудник отредактирован;)");
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Введите корректные значения в поле Должность/Часы/Подразделение");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Введите корректные данные в поле телефон");
+                        phoneBox.Text = "";
+                    }
                 }
                 else
                 {
@@ -91,13 +122,40 @@ namespace Расписание
             
         }
 
-        public bool validation()
+        public bool empty()
         {
             if (f.Text != "" & i.Text != "" & o.Text != "" & divisionComboBox.Text != "" & hoursComboBox3.Text != "" & postComboBox2.Text != "")
             {
                 return true;
             }
             return false;
+        }
+
+        public bool numberValid()
+        {
+            if (phoneBox.Text == "")
+            {
+                return true;
+            }
+            int res;
+            bool isInt = Int32.TryParse(phoneBox.Text, out res);
+            return isInt;
+        }
+
+        public bool validation()
+        {
+            try
+            {
+                if (DBHelper.findPostId(postComboBox2.Text) == -1 | DBHelper.findDivisionId(Convert.ToInt32(divisionComboBox.Text)) == -1 | DBHelper.findHoursId(Convert.ToInt32(hoursComboBox3.Text)) == -1)
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -111,6 +111,7 @@
             // 
             // comboBoxTimeTable
             // 
+            this.comboBoxTimeTable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTimeTable.FormattingEnabled = true;
             this.comboBoxTimeTable.Location = new System.Drawing.Point(918, 121);
             this.comboBoxTimeTable.Name = "comboBoxTimeTable";
@@ -138,6 +139,7 @@
             // 
             // comboBoxTimeWork
             // 
+            this.comboBoxTimeWork.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTimeWork.FormattingEnabled = true;
             this.comboBoxTimeWork.Location = new System.Drawing.Point(918, 154);
             this.comboBoxTimeWork.Name = "comboBoxTimeWork";
